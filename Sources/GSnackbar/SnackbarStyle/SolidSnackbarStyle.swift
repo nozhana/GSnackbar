@@ -79,6 +79,7 @@ public struct SolidSnackbarStyle: SnackbarStyle {
     
     public let titleFont: Font = .headline
     public let descriptionFont: Font = .subheadline
+    public let buttonStyle: some SnackbarButtonStyle = DefaultSnackbarButtonStyle()
 }
 
 

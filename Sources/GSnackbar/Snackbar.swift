@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-struct Snackbar: View {
+struct Snackbar<Style, Content>: View where Style: SnackbarStyle, Content: View {
     let data: SnackbarData
-    let style: SnackbarStyle
+    let style: Style
+    let buttons: Content
     
-    init(data: SnackbarData, style: SnackbarStyle = .defaultStyle()) {
+    init(data: SnackbarData, style: Style = .defaultStyle(), @ViewBuilder buttons: @escaping () -> Content) {
         self.data = data
         self.style = style
+        self.buttons = buttons()
     }
     
     var body: some View {
@@ -33,6 +35,7 @@ struct Snackbar: View {
                 }
             } // Group
             .imageScale(.large)
+            .foregroundStyle(style.foregroundColor)
             
             VStack(alignment: .leading, spacing: 4.0) {
                 Text(data.title)
@@ -45,22 +48,23 @@ struct Snackbar: View {
             Spacer()
             
             VStack(alignment: .trailing) {
-                ForEach(data.buttons) { $0 }
+                buttons
+                    .buttonStyle(style.buttonStyle)
             } // VStack
         } // HStack
         .padding(EdgeInsets(top: 16, leading: 24, bottom: 16, trailing: 24))
         .background {
-            FrostedGlassView()
-                .clipShape(RoundedRectangle(cornerSize: CGSize(width: style.cornerRadius, height: style.cornerRadius), style: .continuous))
-            
-            style.backgroundColor
-                .clipShape(RoundedRectangle(cornerSize: CGSize(width: style.cornerRadius, height: style.cornerRadius), style: .continuous))
-                .overlay {
-                    RoundedRectangle(cornerSize: CGSize(width: style.cornerRadius, height: style.cornerRadius), style: .continuous)
-                        .strokeBorder(lineWidth: 4.0)
-                        .foregroundStyle(style.strokeColor)
-                }
-                .shadow(color: style.shadowColor, radius: 4, y: 4)
+            Group {
+                FrostedGlassView()
+                style.backgroundColor
+            }
+            .clipShape(RoundedRectangle(cornerSize: CGSize(width: style.cornerRadius, height: style.cornerRadius), style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerSize: CGSize(width: style.cornerRadius, height: style.cornerRadius), style: .continuous)
+                    .strokeBorder(lineWidth: 4.0)
+                    .foregroundStyle(style.strokeColor)
+            }
+            .shadow(color: style.shadowColor, radius: 4, y: 4)
         }
     } // body
 }

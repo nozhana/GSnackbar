@@ -19,6 +19,9 @@ public protocol SnackbarStyle {
     var cornerRadius: CGFloat { get }
     var titleFont: Font { get }
     var descriptionFont: Font { get }
+    
+    associatedtype ButtonStyle: SnackbarButtonStyle
+    var buttonStyle: Self.ButtonStyle { get }
 }
 
 public enum SnackbarDuration {

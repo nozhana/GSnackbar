@@ -13,22 +13,25 @@ public struct SnackbarButton: View, Identifiable, Equatable {
     public var systemImage: String?
     public var role: ButtonRole?
     public let action: () -> Void
-    public var style: some SnackbarButtonStyle = .defaultStyle
+    
+    public init(title: LocalizedStringKey? = nil, systemImage: String? = nil, role: ButtonRole? = nil, action: @escaping () -> Void) {
+        self.title = title
+        self.systemImage = systemImage
+        self.role = role
+        self.action = action
+    }
     
     public var body: some View {
         if let title,
            let systemImage {
             Button(title, systemImage: systemImage, role: role, action: action)
-                .buttonStyle(style)
         } else if let title {
             Button(title, role: role, action: action)
-                .buttonStyle(style)
         } else if let systemImage {
             Button(role: role, action: action, label: {
                 Image(systemName: systemImage)
                     .imageScale(.large)
             })
-            .buttonStyle(style)
             .clipShape(.circle)
         }
     }

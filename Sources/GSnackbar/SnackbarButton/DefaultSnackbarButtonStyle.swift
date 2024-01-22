@@ -33,5 +33,5 @@ public struct DefaultSnackbarButtonStyle: SnackbarButtonStyle {
 }
 
 extension ButtonStyle where Self == DefaultSnackbarButtonStyle {
-    public static var defaultStyle: some SnackbarButtonStyle { DefaultSnackbarButtonStyle() }
+    public static var defaultStyle: DefaultSnackbarButtonStyle { DefaultSnackbarButtonStyle() }
 }
