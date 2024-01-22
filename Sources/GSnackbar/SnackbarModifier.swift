@@ -14,6 +14,12 @@ public struct SnackbarModifier: ViewModifier {
     
     @State private var task: DispatchWorkItem?
     
+    public init(visible: Binding<Bool>, data: SnackbarData, style: SnackbarStyle) {
+        self._visible = visible
+        self.data = data
+        self.style = style
+    }
+    
     public func body(content: Content) -> some View {
         ZStack(alignment: style.position.alignment) {
             content

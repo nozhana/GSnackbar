@@ -8,11 +8,11 @@
 import SwiftUI
 
 extension Color {
-    public init(light: Color, dark: Color) {
+    init(light: Color, dark: Color) {
         self.init(uiColor: UIColor(light: UIColor(light), dark: UIColor(dark)))
     }
     
-    public static func blend(_ color1: Color, _ color2: Color, intensity: (color1: CGFloat, color2: CGFloat) = (0.5, 0.5)) -> Self {
+    static func blend(_ color1: Color, _ color2: Color, intensity: (color1: CGFloat, color2: CGFloat) = (0.5, 0.5)) -> Self {
         guard intensity.color1.between(0.0, 1.0),
               intensity.color2.between(0.0, 1.0) else {
             fatalError("Color intensity invalid - Should be between 0.0 and 1.0")
@@ -80,7 +80,7 @@ extension Color {
 }
 
 extension UIColor {
-    public convenience init(light: UIColor, dark: UIColor) {
+    convenience init(light: UIColor, dark: UIColor) {
         self.init { traitCollection in
             switch traitCollection.userInterfaceStyle {
             case .dark:

@@ -8,9 +8,15 @@
 import SwiftUI
 
 public struct SolidSnackbarStyle: SnackbarStyle {
-    public var duration: SnackbarDuration = .flash
-    public var decoration: SnackbarDecoration = .plain
-    public var position: SnackbarPosition = .top
+    public init(duration: SnackbarDuration = .flash, decoration: SnackbarDecoration = .plain, position: SnackbarPosition = .top) {
+        self.duration = duration
+        self.decoration = decoration
+        self.position = position
+    }
+    
+    public var duration: SnackbarDuration
+    public var decoration: SnackbarDecoration
+    public var position: SnackbarPosition
     
     public var backgroundColor: Color {
         switch decoration {
