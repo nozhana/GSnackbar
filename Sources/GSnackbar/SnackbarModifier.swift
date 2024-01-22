@@ -7,28 +7,29 @@
 
 import SwiftUI
 
-struct SnackbarModifier: ViewModifier {
-    @Binding var visible: Bool
-    let data: SnackbarData
+public struct SnackbarModifier: ViewModifier {
+    @Binding public var visible: Bool
+    public let data: SnackbarData
+    public let style: SnackbarStyle
     
     @State private var task: DispatchWorkItem?
     
-    func body(content: Content) -> some View {
-        ZStack(alignment: data.position.alignment) {
+    public func body(content: Content) -> some View {
+        ZStack(alignment: style.position.alignment) {
             content
             if visible {
-                Snackbar(data: data)
+                Snackbar(data: data, style: style)
                     .padding()
                     .animation(.easeInOut, value: 1.2)
-                    .transition(data.transition)
+                    .transition(style.transition)
                     .onTapGesture {
-                        guard case .flash = data.duration else { return }
+                        guard case .flash = style.duration else { return }
                         withAnimation {
                             self.visible = false
                         }
                     }
                     .onAppear {
-                        guard case .flash = data.duration else { return }
+                        guard case .flash = style.duration else { return }
                         
                         self.task = DispatchWorkItem {
                             withAnimation {
@@ -46,8 +47,8 @@ struct SnackbarModifier: ViewModifier {
 }
 
 
-public extension View {
-    func snackbar(_ visible: Binding<Bool>, data: SnackbarData) -> some View {
-        modifier(SnackbarModifier(visible: visible, data: data))
+extension View {
+    public func snackbar<S>(_ visible: Binding<Bool>, data: SnackbarData, style: S) -> some View where S: SnackbarStyle {
+        modifier(SnackbarModifier(visible: visible, data: data, style: style))
     }
 }

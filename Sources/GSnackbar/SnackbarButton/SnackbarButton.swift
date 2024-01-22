@@ -7,38 +7,39 @@
 
 import SwiftUI
 
-struct SnackbarButton: View, Identifiable, Equatable {
-    let id = UUID()
-    var title: LocalizedStringKey?
-    var systemImage: String?
-    var role: ButtonRole?
-    let action: () -> Void
+public struct SnackbarButton: View, Identifiable, Equatable {
+    public let id = UUID()
+    public var title: LocalizedStringKey?
+    public var systemImage: String?
+    public var role: ButtonRole?
+    public let action: () -> Void
+    public var style: some SnackbarButtonStyle = .defaultStyle
     
-    var body: some View {
+    public var body: some View {
         if let title,
            let systemImage {
             Button(title, systemImage: systemImage, role: role, action: action)
-                .buttonStyle(.snackbar)
+                .buttonStyle(style)
         } else if let title {
             Button(title, role: role, action: action)
-                .buttonStyle(.snackbar)
+                .buttonStyle(style)
         } else if let systemImage {
             Button(role: role, action: action, label: {
                 Image(systemName: systemImage)
                     .imageScale(.large)
             })
-            .buttonStyle(.snackbar)
+            .buttonStyle(style)
             .clipShape(.circle)
         }
     }
     
-    static func == (lhs: SnackbarButton, rhs: SnackbarButton) -> Bool {
+    public static func == (lhs: SnackbarButton, rhs: SnackbarButton) -> Bool {
         lhs.id == rhs.id
     }
 }
 
 extension SnackbarButton {
-    static func close(_ handler: Binding<Bool>) -> SnackbarButton {
+    public static func close(_ handler: Binding<Bool>) -> SnackbarButton {
         .init(systemImage: "xmark", role: .cancel) {
             withAnimation {
                 handler.wrappedValue = false
@@ -46,11 +47,11 @@ extension SnackbarButton {
         }
     }
     
-    static func close(_ action: @escaping () -> Void) -> SnackbarButton {
+    public static func close(_ action: @escaping () -> Void) -> SnackbarButton {
         .init(systemImage: "xmark", role: .cancel, action: action)
     }
     
-    static func cancel(_ handler: Binding<Bool>) -> SnackbarButton {
+    public static func cancel(_ handler: Binding<Bool>) -> SnackbarButton {
         .init(title: "Cancel", role: .cancel) {
             withAnimation {
                 handler.wrappedValue = false
@@ -58,7 +59,7 @@ extension SnackbarButton {
         }
     }
     
-    static func cancel(_ action: @escaping () -> Void) -> SnackbarButton {
+    public static func cancel(_ action: @escaping () -> Void) -> SnackbarButton {
         .init(title: "Cancel", role: .cancel, action: action)
     }
 }

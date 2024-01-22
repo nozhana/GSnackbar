@@ -8,11 +8,11 @@
 import SwiftUI
 
 extension Color {
-    init(light: Color, dark: Color) {
+    public init(light: Color, dark: Color) {
         self.init(uiColor: UIColor(light: UIColor(light), dark: UIColor(dark)))
     }
     
-    static func blend(_ color1: Color, _ color2: Color, intensity: (color1: CGFloat, color2: CGFloat) = (0.5, 0.5)) -> Self {
+    public static func blend(_ color1: Color, _ color2: Color, intensity: (color1: CGFloat, color2: CGFloat) = (0.5, 0.5)) -> Self {
         guard intensity.color1.between(0.0, 1.0),
               intensity.color2.between(0.0, 1.0) else {
             fatalError("Color intensity invalid - Should be between 0.0 and 1.0")
@@ -38,29 +38,49 @@ extension Color {
     }
     
     // MARK: - Colors
-    static var snackbarInfo: Color {
+    public static var snackbarInfo: Color {
         .init(light: Color(red: 0, green: 0.991, blue: 1, opacity: 0.2),
               dark: Color(red: 0, green: 0.945, blue: 0.954, opacity: 0.2))
     }
     
-    static var snackbarWarning: Color {
+    public static var snackbarWarning: Color {
         .init(light: Color(red: 0.999, green: 0.985, blue: 0.134, opacity: 0.2),
               dark: Color(red: 0.982, green: 0.966, blue: 0, opacity: 0.2))
     }
     
-    static var snackbarError: Color {
+    public static var snackbarError: Color {
         .init(light: Color(red: 0.974, green: 0.366, blue: 0.261, opacity: 0.2),
               dark: Color(red: 1, green: 0.149, blue: 0, opacity: 0.2))
     }
     
-    static var snackbarSuccess: Color {
+    public static var snackbarSuccess: Color {
         .init(light: Color(red: 0.451, green: 0.988, blue: 0.838, opacity: 0.25),
               dark: Color(red: 0.451, green: 0.988, blue: 0.838, opacity: 0.25))
+    }
+    
+    public static var snackbarInfoSolid: Color {
+        .init(light: Color(red: 0, green: 0.991, blue: 1),
+              dark: Color(red: 0, green: 0.945, blue: 0.954))
+    }
+    
+    public static var snackbarWarningSolid: Color {
+        .init(light: Color(red: 0.999, green: 0.985, blue: 0.134),
+              dark: Color(red: 0.982, green: 0.966, blue: 0))
+    }
+    
+    public static var snackbarErrorSolid: Color {
+        .init(light: Color(red: 0.974, green: 0.366, blue: 0.261),
+              dark: Color(red: 1, green: 0.149, blue: 0))
+    }
+    
+    public static var snackbarSuccessSolid: Color {
+        .init(light: Color(red: 0.451, green: 0.988, blue: 0.838),
+              dark: Color(red: 0.451, green: 0.988, blue: 0.838))
     }
 }
 
 extension UIColor {
-    convenience init(light: UIColor, dark: UIColor) {
+    public convenience init(light: UIColor, dark: UIColor) {
         self.init { traitCollection in
             switch traitCollection.userInterfaceStyle {
             case .dark:
