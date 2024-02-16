@@ -1,17 +1,25 @@
 //
 //  FrostedGlassView.swift
-//  
 //
-//  Created by Nozhan Amiri on 1/21/24.
+//
+//  Created by Nozhan Amiri on 1/27/24.
 //
 
 import SwiftUI
 
 struct FrostedGlassView: UIViewRepresentable {
-    func makeUIView(context: Context) -> some UIView { UIVisualEffectView(effect: UIBlurEffect(style: .light)) }
+    let blurStyle: UIBlurEffect.Style
+    
+    init(blurStyle: UIBlurEffect.Style = .prominent) {
+        self.blurStyle = blurStyle
+    }
+    
+    func makeUIView(context: Context) -> some UIView {
+        UIVisualEffectView(effect: UIBlurEffect(style: blurStyle))
+    }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
         guard let uiView = uiView as? UIVisualEffectView else { return }
-        uiView.effect = UIBlurEffect(style: .light)
+        uiView.effect = UIBlurEffect(style: blurStyle)
     }
 }
